@@ -1,0 +1,13 @@
+{
+  "name": "darkcode",
+  "version": "1.0.0",
+  "workspaces": ["packages/*"],
+  "scripts": {
+    "dev:cli": "bun run --watch packages/cli/src/index.tsx"
+  },
+  "dependencies": {
+    "@opentui/core": "^0.2.15",
+    "@opentui/react": "^0.2.15",
+    "react": "^19.2.6"
+  }
+}
