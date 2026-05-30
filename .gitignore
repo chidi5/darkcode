@@ -32,3 +32,11 @@ report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
 
 # Finder (MacOS) folder config
 .DS_Store
+
+# agent / docs (not part of the distributed package)
+.agents/
+AGENTS.md
+IMPLEMENTATION_PLAN.md
+PROJECT_SCOPE.md
+TECH_STACK.md
+skills-lock.json

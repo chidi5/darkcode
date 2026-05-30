@@ -19,3 +19,8 @@ export const SplitBorder = {
     vertical: "┃",
   },
 };
+
+export const SplitBorderChars = {
+  ...EmptyBorder,
+  vertical: "┃",
+};

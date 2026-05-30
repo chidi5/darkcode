@@ -2,13 +2,15 @@ import { ScrollBoxRenderable } from "@opentui/core";
 import { useKeyboard } from "@opentui/react";
 import { useMemo, useRef, useState } from "react";
 import { getFilteredCommands } from "./filter-commads";
-import { Command, UseCommandMenuReturn } from "./types";
+import type { Command, UseCommandMenuReturn } from "./types";
+import { useKeyboardLayer } from "../../providers/keyboard-layer";
 
 export function useCommandMenu(): UseCommandMenuReturn {
   const [textValue, setTextValue] = useState("false");
   const [showCommandMenu, setShowCommandMenu] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(0);
   const scrollRef = useRef<ScrollBoxRenderable | null>(null);
+  const { isTopLayer, push, pop } = useKeyboardLayer();
 
   const commandQuery =
     showCommandMenu && textValue.startsWith("/") ? textValue.slice(1) : "";
@@ -17,6 +19,11 @@ export function useCommandMenu(): UseCommandMenuReturn {
     () => getFilteredCommands(commandQuery),
     [commandQuery],
   );
+
+  const close = () => {
+    setShowCommandMenu(false);
+    pop("command");
+  };
 
   const handleContentChange = (content: string) => {
     setTextValue(content);
@@ -31,8 +38,13 @@ export function useCommandMenu(): UseCommandMenuReturn {
     const prefix = content.startsWith("/") ? content.slice(1) : null;
     if (prefix !== null && !prefix.includes(" ")) {
       setShowCommandMenu(true);
+      push("command", () => {
+        close();
+        return true;
+      });
     } else {
       setShowCommandMenu(false);
+      pop("command");
     }
   };
 
@@ -41,6 +53,7 @@ export function useCommandMenu(): UseCommandMenuReturn {
     const command = filteredCommands[index];
     if (command) {
       setShowCommandMenu(false);
+      pop("command");
     }
     return command;
   };
@@ -53,6 +66,7 @@ export function useCommandMenu(): UseCommandMenuReturn {
       case "escape":
         key.preventDefault();
         setShowCommandMenu(false);
+        pop("command");
         break;
       case "up":
         key.preventDefault();
