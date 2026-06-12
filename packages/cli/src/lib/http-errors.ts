@@ -16,6 +16,6 @@ export async function getErrorMessage(
     // Ignore JSON parsing errors
   }
   return (
-    `Response failed with status ${response.status}` || response.statusText
+    response.statusText || `Response failed with status ${response.status}`
   );
 }
