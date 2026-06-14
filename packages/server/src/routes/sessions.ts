@@ -1,7 +1,7 @@
 import { Hono } from "hono";
 import { z } from "zod";
 import { zValidator } from "@hono/zod-validator";
-import { db } from "@darkcode/database";
+import { db } from "@darkcode/database/client";
 import { Role, Mode, MessageStatus } from "@darkcode/database/enums";
 import { findSupportedChatModel } from "@darkcode/shared";
 
