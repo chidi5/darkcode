@@ -9,7 +9,7 @@ import { getErrorMessage } from "../lib/http-errors";
 import { useToast } from "../providers/toast";
 
 const newSessionSchema = z.object({
-  message: z.string(),
+  message: z.string().trim().min(1),
 });
 
 export function NewSession() {
