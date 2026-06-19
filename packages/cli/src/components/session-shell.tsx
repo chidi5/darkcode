@@ -1,14 +1,5 @@
-import { useEffect, useRef, useCallback } from "react";
-import {
-  type ScrollBoxRenderable,
-  type TextareaRenderable,
-  type KeyBinding,
-  TextAttributes,
-} from "@opentui/core";
+import { type KeyBinding, TextAttributes } from "@opentui/core";
 import { useTheme } from "../providers/theme";
-import { useKeyboardLayer } from "../providers/keyboard-layer";
-import { EmptyBorder } from "./border";
-import { StatusBar } from "./status-bar";
 import { InputBar } from "./input-bar";
 import { Spinner } from "./spinner";
 
@@ -24,6 +15,7 @@ type SessionShellProps = {
   onSubmit: (message: string) => void;
   inputDisabled?: boolean;
   loading?: boolean;
+  interruptible?: boolean;
 };
 
 export function SessionShell({
@@ -31,6 +23,7 @@ export function SessionShell({
   onSubmit,
   inputDisabled,
   loading,
+  interruptible,
 }: SessionShellProps) {
   const { colors } = useTheme();
 
@@ -60,7 +53,12 @@ export function SessionShell({
         paddingLeft={1}
       >
         <box flexDirection="row" gap={2} alignItems="center">
-          {loading && <Spinner />}
+          {loading && (
+            <>
+              <Spinner />
+              {interruptible && <text>esc to interrupt</text>}
+            </>
+          )}
         </box>
         <box flexDirection="row" gap={1} flexShrink={0} marginLeft="auto">
           <text>tab</text>
